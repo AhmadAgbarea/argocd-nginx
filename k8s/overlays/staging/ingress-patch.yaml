@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx-example
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-staging"  # Use staging issuer
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "false"  # Optional SSL for staging
+spec:
+  tls:
+  - hosts:
+    - nginx-staging.iqball.tech
+    secretName: nginx-example-staging-tls
+  rules:
+  - host: nginx-staging.iqball.tech
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: nginx-example
+            port:
+              number: 80

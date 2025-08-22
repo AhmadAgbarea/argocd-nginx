@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nginx-example
+  namespace: argocd
+  labels:
+    app: nginx-example
+    environment: example
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/AhmadAgbarea/argocd-nginx.git
+    targetRevision: HEAD
+    path: k8s/overlays/dev  # Default to dev environment
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: nginx-example-dev
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - PrunePropagationPolicy=foreground
+      - PruneLast=true
+  revisionHistoryLimit: 10
+  ignoreDifferences:
+    - group: apps
+      kind: Deployment
+      jsonPointers:
+        - /spec/replicas

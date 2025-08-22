@@ -1,0 +1,40 @@
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+
+# Kubernetes secrets (if any)
+*-secret.yaml
+secrets/
+
+# Local environment files
+.env
+.env.local
+.env.*.local
+
+# ArgoCD local state
+.argocd/
+
+# Build artifacts
+build/
+dist/

@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx-example
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-staging"  # Use staging for dev
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"      # Optional: disable SSL redirect for dev
+spec:
+  tls:
+  - hosts:
+    - nginx-dev.iqball.tech
+    secretName: nginx-example-dev-tls
+  rules:
+  - host: nginx-dev.iqball.tech
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: nginx-example
+            port:
+              number: 80

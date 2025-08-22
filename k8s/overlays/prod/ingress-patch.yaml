@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx-example
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"     # Use production issuer
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"       # Force SSL redirect for prod
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/rate-limit: "100"          # Rate limiting for production
+    nginx.ingress.kubernetes.io/rate-limit-window: "1m"
+spec:
+  tls:
+  - hosts:
+    - nginx-prod.iqball.tech
+    secretName: nginx-example-prod-tls
+  rules:
+  - host: nginx-prod.iqball.tech
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: nginx-example
+            port:
+              number: 80

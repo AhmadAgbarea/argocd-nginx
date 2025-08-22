@@ -1,0 +1,110 @@
+# Nginx Example Configuration Values
+# This file documents the configurable parameters for the nginx application
+
+# Application Configuration
+app:
+  name: nginx-example
+  version: "1.0.0"
+  description: "Sample nginx application for ArgoCD demonstration"
+
+# Image Configuration
+image:
+  repository: nginx
+  tag: "1.25-alpine"
+  pullPolicy: IfNotPresent
+
+# Deployment Configuration
+deployment:
+  base:
+    replicas: 2
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+      limits:
+        cpu: 500m
+        memory: 256Mi
+  
+  development:
+    replicas: 1
+    resources:
+      requests:
+        cpu: 50m
+        memory: 64Mi
+      limits:
+        cpu: 200m
+        memory: 128Mi
+  
+  production:
+    replicas: 3
+    resources:
+      requests:
+        cpu: 200m
+        memory: 256Mi
+      limits:
+        cpu: 1000m
+        memory: 512Mi
+
+# Service Configuration
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 80
+
+# Nginx Configuration
+nginx:
+  config:
+    server_name: localhost
+    root_path: /usr/share/nginx/html
+    index_files: ["index.html", "index.htm"]
+    error_page: /50x.html
+    health_endpoint: /health
+    custom_headers:
+      X-App-Version: "v1.0.0"
+      X-Environment: "base"
+
+# Environment-specific Settings
+environments:
+  development:
+    log_level: debug
+    environment: development
+    monitoring: false
+  
+  production:
+    log_level: info
+    environment: production
+    monitoring: true
+    prometheus:
+      scrape: true
+      port: 80
+      path: /metrics
+
+# Health Check Configuration
+healthChecks:
+  liveness:
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 3
+  
+  readiness:
+    initialDelaySeconds: 5
+    periodSeconds: 5
+    timeoutSeconds: 3
+    failureThreshold: 3
+
+# Namespace Configuration
+namespaces:
+  base: nginx-example
+  development: nginx-example-dev
+  production: nginx-example-prod
+
+# Labels and Annotations
+labels:
+  app: nginx-example
+  managed-by: argocd
+  version: v1.0.0
+
+annotations:
+  description: "Sample nginx application deployed with ArgoCD"
+  maintainer: "DevOps Team"
