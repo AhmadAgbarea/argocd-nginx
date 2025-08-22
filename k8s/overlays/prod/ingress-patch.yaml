@@ -3,11 +3,9 @@ kind: Ingress
 metadata:
   name: nginx-example
   annotations:
-    cert-manager.io/cluster-issuer: "letsencrypt-prod"     # Use production issuer
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
     external-dns.alpha.kubernetes.io/hostname: "nginx-prod.iqball.tech"
     external-dns.alpha.kubernetes.io/ttl: "300"
-    traefik.ingress.kubernetes.io/router.middlewares: "nginx-example-prod-redirect@kubernetescrd"
-    traefik.ingress.kubernetes.io/router.middlewares: "nginx-example-prod-ratelimit@kubernetescrd"
 spec:
   tls:
   - hosts:

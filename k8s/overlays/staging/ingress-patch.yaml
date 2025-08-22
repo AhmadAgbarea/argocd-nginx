@@ -3,10 +3,9 @@ kind: Ingress
 metadata:
   name: nginx-example
   annotations:
-    cert-manager.io/cluster-issuer: "letsencrypt-staging"  # Use staging issuer
+    cert-manager.io/cluster-issuer: "letsencrypt-staging"
     external-dns.alpha.kubernetes.io/hostname: "nginx-staging.iqball.tech"
     external-dns.alpha.kubernetes.io/ttl: "300"
-    traefik.ingress.kubernetes.io/router.middlewares: "nginx-example-staging-redirect@kubernetescrd"
 spec:
   tls:
   - hosts:
