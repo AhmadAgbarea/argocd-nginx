@@ -4,7 +4,9 @@ metadata:
   name: nginx-example
   annotations:
     cert-manager.io/cluster-issuer: "letsencrypt-staging"  # Use staging for dev
-    nginx.ingress.kubernetes.io/ssl-redirect: "false"      # Optional: disable SSL redirect for dev
+    external-dns.alpha.kubernetes.io/hostname: "nginx-dev.iqball.tech"
+    external-dns.alpha.kubernetes.io/ttl: "300"
+    traefik.ingress.kubernetes.io/router.middlewares: "nginx-example-dev-redirect@kubernetescrd"
 spec:
   tls:
   - hosts:

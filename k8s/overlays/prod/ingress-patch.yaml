@@ -4,10 +4,10 @@ metadata:
   name: nginx-example
   annotations:
     cert-manager.io/cluster-issuer: "letsencrypt-prod"     # Use production issuer
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"       # Force SSL redirect for prod
-    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-    nginx.ingress.kubernetes.io/rate-limit: "100"          # Rate limiting for production
-    nginx.ingress.kubernetes.io/rate-limit-window: "1m"
+    external-dns.alpha.kubernetes.io/hostname: "nginx-prod.iqball.tech"
+    external-dns.alpha.kubernetes.io/ttl: "300"
+    traefik.ingress.kubernetes.io/router.middlewares: "nginx-example-prod-redirect@kubernetescrd"
+    traefik.ingress.kubernetes.io/router.middlewares: "nginx-example-prod-ratelimit@kubernetescrd"
 spec:
   tls:
   - hosts:
