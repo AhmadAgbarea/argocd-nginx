@@ -12,7 +12,6 @@ spec:
   tls:
   - hosts:
     - nginx-example.example.com  # Will be overridden by overlays
-    secretName: nginx-example-tls
   rules:
   - host: nginx-example.example.com  # Will be overridden by overlays
     http:

@@ -10,7 +10,6 @@ spec:
   tls:
   - hosts:
     - nginx-staging.iqball.tech
-    secretName: nginx-example-staging-tls
   rules:
   - host: nginx-staging.iqball.tech
     http:

@@ -10,7 +10,6 @@ spec:
   tls:
   - hosts:
     - nginx-dev.iqball.tech
-    secretName: nginx-example-dev-tls
   rules:
   - host: nginx-dev.iqball.tech
     http:

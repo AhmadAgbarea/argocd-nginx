@@ -10,7 +10,6 @@ spec:
   tls:
   - hosts:
     - nginx-prod.iqball.tech
-    secretName: nginx-example-prod-tls
   rules:
   - host: nginx-prod.iqball.tech
     http:
